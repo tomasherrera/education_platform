@@ -14,11 +14,10 @@
 
         %span{"ng-hide" => "editing && $index === selected_edit"}
           {{course.title}}
+        %form{ "ng-submit" => "update(course); $event.stopPropagation();", "ng-show" => "editing  && $index === selected_edit", :style => "position: relative; display: inline"}
+          %input{:value => "{{course.title}}", "ng-model" => "course.title", :class => "form-control input-sm", :style => "width: 400px; position: relative; display: inline" }
+          %input{:type => "submit", :value => "Update", :class => "btn btn-primary btn-xs"}
         = link_to "Edit name", "#", "ng-click" => "selected_edit = $index; editing = true; $event.stopPropagation();"
-        %form{}
-          %input{:value => "{{course.title}}", "ng-show" => "editing  && $index === selected_edit", "ng-model" => "new_title"}
-          %input{:type => "submit", :value => "Update", :class => "btn btn-primary btn-xs", "ng-click" => "update(course); $event.stopPropagation();"}
-
 
         .panel-body{"ng-show" => "$index === selected"}
           {{course.description}}
