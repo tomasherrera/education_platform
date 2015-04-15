@@ -1,0 +1,38 @@
+.container{"ng-controller" => "SchoolController"}
+  = link_to "Log", "#", "ng-click" => "addAlert()"
+  - if user_signed_in?
+    = link_to "New Course", new_course_path
+
+    %h3 My Courses
+    %h6
+      Order by:
+      = link_to "Created At", "#", "ng-click" => "order = '-created_at'","ng-model" => "order"
+      \/
+      = link_to "Title", "#", "ng-click" => "order = 'title'", "ng-model" => "orden"
+    .list-group
+      %span.list-group-item{:href => "#", "ng-repeat" => "course in courses | orderBy: order", "ng-click" => "selected = $index"}
+
+        %span{"ng-hide" => "editing && $index === selected_edit"}
+          {{course.title}}
+        = link_to "Edit name", "#", "ng-click" => "selected_edit = $index; editing = true; $event.stopPropagation();"
+        %form{}
+          %input{:value => "{{course.title}}", "ng-show" => "editing  && $index === selected_edit", "ng-model" => "new_title"}
+          %input{:type => "submit", :value => "Update", :class => "btn btn-primary btn-xs", "ng-click" => "update(course); $event.stopPropagation();"}
+
+
+        .panel-body{"ng-show" => "$index === selected"}
+          {{course.description}}
+
+    %h3 Courses I am subscribed to
+    %h6
+      Order by:
+      = link_to "Created At", "#", "ng-click" => "assisted_order = '-created_at'","ng-model" => "assisted_order"
+      \/
+      = link_to "Title", "#", "ng-click" => "assisted_order = 'title'", "ng-model" => "assisted_order"
+    .list-group
+      %a.list-group-item{:href => "#", "ng-repeat" => "course in assisted_courses | orderBy: assisted_order", "ng-click" => "selected = $index"}
+        {{course.title}}
+        .panel-body{"ng-show" => "$index === selected"}
+          {{course.description}}
+  %strong
+    /{{orden}}

@@ -1,0 +1,19 @@
+= form_for @course, :html => {:class => "login-form form-horizontal"} do |f|
+  %fieldset
+    %legend Course Details
+    .form-group
+      = f.label :title, :class => "control-label"
+      = f.text_field :title, :class => "form-control", autofocus: true
+    .form-group
+      = f.label :description, :class => "control-label"
+      = f.text_area :description, :class => "form-control", :rows => "3"
+      %span.help-block Describe the course in 500 characters or less.
+    .form-group
+      %label.col-lg-2.control-label{:for => "select"} Category
+      .col-lg-10
+        = f.select(:category, ["Computers", "Math", "Science", "Utilities"], { include_blank: false }, :class => "form-control")
+        /= select_tag(:category, options_for_select(["Computers", "Math"], "Computers"), :class => "form-control")
+    .form-group
+      .col-lg-10.col-lg-offset-2
+        %button.btn.btn-default{:type => "reset"} Cancel
+        %button.btn.btn-primary{:type => "submit"} Create
