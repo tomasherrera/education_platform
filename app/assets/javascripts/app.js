@@ -31,6 +31,10 @@
 
     };
 
+    $scope.setOrder = function(new_order){
+      $scope.order = new_order;
+    };
+
     $scope.addAlert = function(){
       //console.log($scope.courses);
     };
