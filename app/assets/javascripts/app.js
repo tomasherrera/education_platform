@@ -12,7 +12,6 @@
         $scope.courses = value.courses;
         $scope.assisted_courses = value.assisted_courses;
       },
-      //error
       function( error ){/*Do something with error*/}
     );
 
