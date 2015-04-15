@@ -5,10 +5,10 @@
 
     %h3 My Courses
     %h6
-      Order by:
-      = link_to "Created At", "", "ng-click" => "setOrder('-created_at')","ng-model" => "order"
-      \/
-      = link_to "Title", "", "ng-click" => "setOrder('title')", "ng-model" => "order"
+      //Order by:
+      //= link_to "Created At", "", "ng-click" => "setOrder('-created_at')","ng-model" => "order"
+      // \/
+      //= link_to "Title", "", "ng-click" => "setOrder('title')", "ng-model" => "order"
     .list-group
       %span.list-group-item{:href => "", "ng-repeat" => "course in courses", "ng-click" => "selected = course"}
 
