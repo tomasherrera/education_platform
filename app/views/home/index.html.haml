@@ -9,29 +9,41 @@
       //= link_to "Created At", "", "ng-click" => "setOrder('-created_at')","ng-model" => "order"
       // \/
       //= link_to "Title", "", "ng-click" => "setOrder('title')", "ng-model" => "order"
-    .list-group
-      %span.list-group-item{:href => "", "ng-repeat" => "course in courses", "ng-click" => "selected = course"}
+    .panel.panel-default{"ng-repeat" => "course in courses", "ng-click" => "select(course)"}
+      .panel-heading{"ng-hide" => "editing && selected === course"}
+        {{course.title}}
+        = link_to "", "ng-click" => "selected = course; editing = true; $event.stopPropagation();", "ng-show" => "canEdit(course)" do
+          %span.glyphicon.glyphicon-pencil
+        = link_to "", "ng-click" => "delete(course); $event.stopPropagation();", "ng-show" => "canEdit(course)" do
+          %span.glyphicon.glyphicon-trash
+      %form{ "ng-submit" => "update(course); $event.stopPropagation();", "ng-show" => "editing  && course === selected", :style => "position: relative; display: inline"}
+        %input{:required => true, "ng-model" => "course.title", :class => "form-control input-sm", :style => "width: 400px; position: relative; display: inline" }
+        %input{:type => "submit", :value => "Update", :class => "btn btn-primary btn-xs"}
+      //
+      .panel-body{"ng-show" => "selected === course"}
+        {{course.description}}
+      .panel-footer
+        Number of Students:
+        %span.badge
+          {{course.students_number}}
 
-        %span{"ng-hide" => "editing && selected === course"}
-          {{course.title}}
-        %form{ "ng-submit" => "update(course); $event.stopPropagation();", "ng-show" => "editing  && course === selected", :style => "position: relative; display: inline"}
-          %input{:required => true, "ng-model" => "course.title", :class => "form-control input-sm", :style => "width: 400px; position: relative; display: inline" }
-          %input{:type => "submit", :value => "Update", :class => "btn btn-primary btn-xs"}
-        = link_to "Edit name", "", "ng-click" => "selected = course; editing = true; $event.stopPropagation();"
-
-        .panel-body{"ng-show" => "selected === course"}
-          {{course.description}}
 
     %h3 Courses I am subscribed to
     %h6
-      Order by:
-      = link_to "Created At", "", "ng-click" => "assisted_order = '-created_at'","ng-model" => "assisted_order"
-      \/
-      = link_to "Title", "", "ng-click" => "assisted_order = 'title'", "ng-model" => "assisted_order"
-    .list-group
-      %a.list-group-item{:href => "", "ng-repeat" => "course in assisted_courses | orderBy: assisted_order", "ng-click" => "selected = $index"}
+      //Order by:
+      //= link_to "Created At", "", "ng-click" => "assisted_order = '-created_at'","ng-model" => "assisted_order"
+      //\/
+      //= link_to "Title", "", "ng-click" => "assisted_order = 'title'", "ng-model" => "assisted_order"
+    .panel.panel-default{"ng-repeat" => "course in assisted_courses", "ng-click" => "select(course)"}
+      .panel-heading{"ng-hide" => "editing && selected === course"}
         {{course.title}}
-        .panel-body{"ng-show" => "$index === selected"}
-          {{course.description}}
+        = link_to "Edit name", "", "ng-click" => "selected = course; editing = true; $event.stopPropagation();", "ng-show" => "canEdit(course)"
+      %form{ "ng-submit" => "update(course); $event.stopPropagation();", "ng-show" => "editing  && course === selected", :style => "position: relative; display: inline"}
+        %input{:required => true, "ng-model" => "course.title", :class => "form-control input-sm", :style => "width: 400px; position: relative; display: inline" }
+        %input{:type => "submit", :value => "Update", :class => "btn btn-primary btn-xs"}
+
+      .panel-body{"ng-show" => "selected === course"}
+        {{course.description}}
+        {{course.students_number}}
   %strong
     /{{orden}}

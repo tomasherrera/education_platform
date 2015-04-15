@@ -38,6 +38,10 @@ class CoursesController < ApplicationController
 	end
 
 	def destroy
+		course = Course.find(params[:id])
+    if(course.destroy)
+			render json: course, status: :ok
+    end
 	end
 
 	private
