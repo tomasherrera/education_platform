@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
+  get 'course_connections/index'
+
   devise_for :users
-  resources :courses
-  root 'home#index' 
+  resources :courses do
+    get "students" => "course_connections#index"
+  end
+  root 'home#index'
   get "index" => "home#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

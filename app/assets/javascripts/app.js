@@ -6,6 +6,7 @@
     $scope.courses = [];
     $scope.order = "title";
     $scope.selected = {};
+    $scope.editing = false;
     IndexCourses = $resource("/index.json", {}, {});
 
     $scope.getCourses = function(){
@@ -21,11 +22,12 @@
 
     var Course = $resource('/courses/:id', {id: "@id"} , {"update": {method: "PUT"}});
 
-    $scope.update = function(course){
+    $scope.update = function(course, index){
       Course.update({ id:course.id }, course).$promise.then(
         //success
         function( value ){
-          $scope.getCourses();
+          $scope.courses[index].title = value.title;
+          $scope.setEditing(false);
         },
         //error
         function( error ){/*Do something with error*/}
@@ -45,6 +47,22 @@
           function( error ){/*Do something with error*/}
         );
       }
+    };
+
+    $scope.setEditing = function(value){
+      $scope.editing = value;
+    };
+
+    $scope.getEditing = function(){
+      return $scope.editing;
+    };
+
+    $scope.getSelected = function(course){
+      return course === $scope.selected;
+    };
+
+    $scope.setSelected = function(course){
+      $scope.selected = course;
     };
 
     $scope.setOrder = function(new_order){
