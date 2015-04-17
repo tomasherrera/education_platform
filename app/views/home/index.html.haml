@@ -11,7 +11,7 @@
       //= link_to "Title", "", "ng-click" => "setOrder('title')", "ng-model" => "order"
     .panel.panel-default{"ng-repeat" => "course in courses", "ng-controller" => "CourseConnectionsCtrl as conn"}
       .panel-heading{"ng-hide" => "getEditing() && getSelected(course)"}
-        %button.btn.btn-default.btn-sm
+        %button.btn.btn-info.btn-sm
           {{course.title}}
         %button.btn.btn-default.btn-sm{"ng-click" => "setSelected(course)", "ng-hide" => "getSelected(course)", :class => "description_link"}
           Description
@@ -19,15 +19,15 @@
         %button.btn.btn-default.btn-sm{"ng-click" => "setSelected(null)", "ng-show" => "getSelected(course)", :class => "description_link"}
           Description
           %span.glyphicon.glyphicon-chevron-up
-        %button.btn.btn-default.btn-sm{"ng-click" => "setSelected(course); setEditing(true); $event.stopPropagation(); setOldTitle(course.title)"}
+        %button.btn.btn-warning.btn-sm{"ng-click" => "setSelected(course); setEditing(true); $event.stopPropagation(); setOldTitle(course.title)"}
           %span.glyphicon.glyphicon-pencil
-        %button.btn.btn-default.btn-sm{"ng-click" => "delete(course, $index); $event.stopPropagation();"}
+        %button.btn.btn-danger.btn-sm{"ng-click" => "delete(course, $index); $event.stopPropagation();"}
           %span.glyphicon.glyphicon-trash
       .panel-heading{"ng-show" => "getEditing() && getSelected(course)"}
         %form{ "ng-submit" => "update(course, $index); $event.stopPropagation();", "ng-show" => "getEditing() && getSelected(course)", :style => "position: relative; display: inline"}
           %input{:required => true, "ng-model" => "course.title", :class => "form-control input-sm", :style => "width: 400px; position: relative; display: inline" }
-          %input{:type => "submit", :value => "Update", :class => "btn btn-info btn-sm"}
-        %button.btn.btn-primary.btn-sm{"ng-click" => "setEditing(false); cancelEditing(course)", "ng-show" => "getEditing() && getSelected(course)", :style => "position: relative; display: inline"}
+          %input{:type => "submit", :value => "Update", :class => "btn btn-warning btn-sm"}
+        %button.btn.btn-info.btn-sm{"ng-click" => "setEditing(false); cancelEditing(course)", "ng-show" => "getEditing() && getSelected(course)", :style => "position: relative; display: inline"}
           Cancel
       .panel-body{"ng-show" => "getSelected(course)"}
         {{course.description}}
