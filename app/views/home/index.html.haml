@@ -11,25 +11,31 @@
       //= link_to "Title", "", "ng-click" => "setOrder('title')", "ng-model" => "order"
     .panel.panel-default{"ng-repeat" => "course in courses", "ng-controller" => "CourseConnectionsCtrl as conn"}
       .panel-heading{"ng-hide" => "getEditing() && getSelected(course)"}
-        {{course.title}}
-        = link_to "", "ng-click" => "setSelected(course); setEditing(true); $event.stopPropagation();" do
-          %span.glyphicon.glyphicon-pencil
-        = link_to "", "ng-click" => "delete(course); $event.stopPropagation();" do
-          %span.glyphicon.glyphicon-trash
-        = link_to "", "ng-click" => "setSelected(course)", "ng-hide" => "getSelected(course)" do
+        %button.btn.btn-default.btn-sm
+          {{course.title}}
+        %button.btn.btn-default.btn-sm{"ng-click" => "setSelected(course)", "ng-hide" => "getSelected(course)", :class => "description_link"}
+          Description
           %span.glyphicon.glyphicon-chevron-down
-        = link_to "", "ng-click" => "setSelected(null)", "ng-show" => "getSelected(course)" do
+        %button.btn.btn-default.btn-sm{"ng-click" => "setSelected(null)", "ng-show" => "getSelected(course)", :class => "description_link"}
+          Description
           %span.glyphicon.glyphicon-chevron-up
-      %form{ "ng-submit" => "update(course, $index); $event.stopPropagation();", "ng-show" => "getEditing() && getSelected(course)", :style => "position: relative; display: inline"}
-        %input{:required => true, "ng-model" => "course.title", :class => "form-control input-sm", :style => "margin-top: 10px; margin-left: 10px; width: 400px; position: relative; display: inline" }
-        %input{:type => "submit", :value => "Update", :class => "btn btn-primary btn-sm"}
-      //
+        %button.btn.btn-default.btn-sm{"ng-click" => "setSelected(course); setEditing(true); $event.stopPropagation(); setOldTitle(course.title)"}
+          %span.glyphicon.glyphicon-pencil
+        %button.btn.btn-default.btn-sm{"ng-click" => "delete(course, $index); $event.stopPropagation();"}
+          %span.glyphicon.glyphicon-trash
+      .panel-heading{"ng-show" => "getEditing() && getSelected(course)"}
+        %form{ "ng-submit" => "update(course, $index); $event.stopPropagation();", "ng-show" => "getEditing() && getSelected(course)", :style => "position: relative; display: inline"}
+          %input{:required => true, "ng-model" => "course.title", :class => "form-control input-sm", :style => "width: 400px; position: relative; display: inline" }
+          %input{:type => "submit", :value => "Update", :class => "btn btn-info btn-sm"}
+        %button.btn.btn-primary.btn-sm{"ng-click" => "setEditing(false); cancelEditing(course)", "ng-show" => "getEditing() && getSelected(course)", :style => "position: relative; display: inline"}
+          Cancel
       .panel-body{"ng-show" => "getSelected(course)"}
         {{course.description}}
       .panel-footer
         %button.btn.btn-default.btn-sm{"data-placement" => "top", "data-toggle" => "tooltip", :title => "Number of students", :type => "button",
                                        "ng-click" => 'getStudents(course); showStudents = !showStudents;'}
-          %span.glyphicon.glyphicon-user
+          %span.glyphicon.glyphicon-refresh.glyphicon-refresh-animate{"ng-show" => "loading"}
+          %span.glyphicon.glyphicon-user{"ng-hide" => "loading"}
           %span.badge
             {{course.students_number}}
       .panel-body{"ng-show" => "showStudents"}
@@ -43,7 +49,7 @@
               %th ACTIONS
           %tbody
             %tr{"ng-repeat" => "student in students"}
-              %td 1
+              %td {{$index + 1}}
               %td
                 {{student.first_name}}
                 //%input{:style => "display: block; padding: 0; margin: 0; border: 0; width: 100%;"}
@@ -53,6 +59,19 @@
                 {{student.email}}
               %td
                 Delete
+            %tr
+              %td
+                {{$index + 1}}
+              %td
+                %input.form-control.input-sm{:type => "text", :placeholder => "First Name"}
+              %td
+                %input.form-control.input-sm{:type => "text", :placeholder => "Last Name"}
+              %td
+                %input.form-control.input-sm{:type => "text", :placeholder => "Email"}
+              %td
+                %input{:type => "submit", :value => "Add", :class => "btn btn-success btn-sm"}
+
+
         %a.btn.btn-sm.btn-default.btn-lg.btn-block{:href => ""}
           %span.glyphicon.glyphicon-plus
           Add Student

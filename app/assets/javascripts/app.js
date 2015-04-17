@@ -7,6 +7,7 @@
     $scope.order = "title";
     $scope.selected = {};
     $scope.editing = false;
+    $scope.old_title = "";
     IndexCourses = $resource("/index.json", {}, {});
 
     $scope.getCourses = function(){
@@ -35,18 +36,26 @@
 
     };
 
-    $scope.delete = function(course){
+    $scope.delete = function(course, idx){
       var r = confirm("Are you sure?");
       if (r == true){
         Course.remove({ id:course.id }).$promise.then(
           //success
           function( value ){
-            $scope.getCourses();
+            $scope.courses.splice(idx, 1);
           },
           //error
           function( error ){/*Do something with error*/}
         );
       }
+    };
+
+    $scope.setOldTitle = function(old_title){
+      $scope.old_title = old_title;
+    };
+
+    $scope.cancelEditing = function(course){
+      course.title = $scope.old_title;
     };
 
     $scope.setEditing = function(value){
