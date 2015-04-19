@@ -7,7 +7,7 @@
     %script{:src => "assets/app.js"}
     %script{:src => "assets/controllers/course_connections.js"}
     = csrf_meta_tags
-  %body
+  %body{"ng-controller" => "SchoolController as school"}
     %nav.navbar.navbar-default
       .container
         .container-fluid
@@ -17,18 +17,18 @@
               %span.icon-bar
               %span.icon-bar
               %span.icon-bar
-            %a.navbar-brand{:href => "#"}
+            = link_to "", :class => "navbar-brand", 'ng-click' => 'changeView("/")' do
               Education Platform
               %span.badge alpha
           #bs-example-navbar-collapse-1.collapse.navbar-collapse
             %ul.nav.navbar-nav
-              %li.active
-                %a{:href => "#"}
+              %li{"ng-class" => "dashboard_style"}
+                = link_to "", 'ng-click' => 'changeView("/"); activeWindow();' do
                   Dashboard
                   %span.sr-only (current)
               - if user_signed_in?
-                %li
-                  %a{:href => "#"}= current_user.first_name
+                %li{"ng-class" => "profile_style"}
+                  = link_to current_user.first_name, '', 'ng-click' => 'changeView("/profile"); activeWindow();'
             %ul.nav.navbar-nav.navbar-right
               %li
                 - if user_signed_in?

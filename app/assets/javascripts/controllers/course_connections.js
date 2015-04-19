@@ -15,6 +15,8 @@ angular.module('eduapp').controller("CourseConnectionsCtrl",function($scope, $re
           $scope.loading = false;
         },
         function( error ){/*Do something with error*/}
-      )};
-    }
+      );
+    };
+    $scope.getAllStudents();
+  }
 });

@@ -16,4 +16,7 @@
 //= require angular-resource
 //= require angular-route
 //= require ng-rails-csrf
+//= require angular-rails-templates
+//= require_tree ../templates
+//= require quick-ng-repeat.js
 //= require_tree .
