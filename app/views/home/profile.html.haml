@@ -1,3 +1,47 @@
-.container
-  %h1
-    = @profile.first_name
+.row.profile
+  .col-md-3
+    .profile-sidebar
+      / SIDEBAR USERPIC
+      .profile-userpic
+        %img.img-responsive{:alt => "", :src => "http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg"}/
+      / END SIDEBAR USERPIC
+      / SIDEBAR USER TITLE
+      .profile-usertitle
+        .profile-usertitle-name
+          = "#{@profile.first_name} #{@profile.last_name}"
+        .profile-usertitle-job
+          Tutor
+      / END SIDEBAR USER TITLE
+      / SIDEBAR BUTTONS
+      //.profile-userbuttons
+      //  %button.btn.btn-success.btn-sm{:type => "button"} Follow
+      //  %button.btn.btn-danger.btn-sm{:type => "button"} Message
+      / END SIDEBAR BUTTONS
+      / SIDEBAR MENU
+      .profile-usermenu
+        %ul.nav
+          %li.active
+            %a{:href => ""}
+              %i.glyphicon.glyphicon-home
+              Overview
+          %li
+            %a{:href => ""}
+              %i.glyphicon.glyphicon-user
+              Account Settings
+          %li
+            %a{:href => "", :target => "_blank"}
+              %i.glyphicon.glyphicon-ok
+              Tasks
+          %li
+            %a{:href => ""}
+              %i.glyphicon.glyphicon-flag
+              Help
+      / END MENU
+  .col-md-9
+    .profile-content
+      To manage your courses, go to the
+      = link_to "Dashboard","", 'ng-click' => 'changeView("/"); activeWindow();', :Class => "description_link"
+      by clicking on the top bar link.
+%center
+%br/
+%br/

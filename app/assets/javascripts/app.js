@@ -1,5 +1,8 @@
 (function() {
   var app = angular.module('eduapp', ["ngResource", 'ngRoute', 'ng-rails-csrf', 'templates']);
+  app.factory('Course', function () {
+    return { AllStudentss: [''], FilteredStudents: [''] };
+  });
 
   app.config(function($routeProvider) {
     $routeProvider
@@ -12,7 +15,7 @@
         ;
   });
 
-  app.controller("SchoolController", function($scope, $resource, $routeParams, $location) {
+  app.controller("SchoolController", function($scope, $resource, $routeParams, $location, Course) {
     var IndexCourses;
     var AllStudents
     $scope.courses = [];
@@ -23,7 +26,7 @@
     $scope.dashboard_style = "";
     $scope.profile_style = "";
     $scope.addStudent = false;
-    $scope.all_students = ["'first_name':'Tomas', 'last_name':'Herrera', 'email':'tomasherrera@example.com'"];
+    $scope.Course = Course;
     $scope.query = "";
     IndexCourses = $resource("/index.json", {}, {});
     AllStudents = $resource("/all_students.json", {}, {});
@@ -31,7 +34,7 @@
     $scope.getAllStudents = function(){
       AllStudents.get().$promise.then(
         function( value ){
-          $scope.all_students = value.students;
+          $scope.Course.AllStudentss = value.students;
         },
         function( error ){/*Do something with error*/}
       );

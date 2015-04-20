@@ -25,7 +25,7 @@
           %span.glyphicon.glyphicon-trash
       .panel-heading{"ng-show" => "getEditing() && getSelected(course)"}
         %form{ "ng-submit" => "update(course, $index); $event.stopPropagation();", "ng-show" => "getEditing() && getSelected(course)", :style => "position: relative; display: inline"}
-          %input{:required => true, "ng-model" => "course.title", :class => "form-control input-sm", :style => "width: 400px; position: relative; display: inline" }
+          %input{:required => true, "ng-model" => "course.title", :class => "form-control input-sm", :style => "width: 400px; position: relative; display: inline", "ng-blur" => "cancelEditing(course)" }
           %input{:type => "submit", :value => "Update", :class => "btn btn-warning btn-sm"}
         %button.btn.btn-info.btn-sm{"ng-click" => "setEditing(false); cancelEditing(course)", "ng-show" => "getEditing() && getSelected(course)", :style => "position: relative; display: inline"}
           Cancel
@@ -52,13 +52,13 @@
               %td {{$index + 1}}
               %td
                 {{student.first_name}}
-                //%input{:style => "display: block; padding: 0; margin: 0; border: 0; width: 100%;"}
               %td
                 {{student.last_name}}
               %td
                 {{student.email}}
               %td
-                Delete
+                %button.btn.btn-danger.btn-xs{"ng-click" => "deleteStudent(student, course, $index)"}
+                  Delete
 
         %a.btn.btn-sm.btn-default.btn-lg.btn-block{:href => "", "ng-click" => "addStudent = true", "ng-hide" => "addStudent"}
           %span.glyphicon.glyphicon-plus
@@ -67,7 +67,7 @@
           %span.glyphicon.glyphicon-plus
           Cancel
         %input.form-control.input-sm{:type => "text", :placeholder => "Email", "ng-model" => "query.email", "ng-show" => "addStudent"}
-        %table.table.table-striped.table-hover{"ng-show" => "addStudent && query.email.length > 0 && filtered_students.length > 0"}
+        %table.table.table-striped.table-hover{"ng-show" => "addStudent && query.email.length > 0 && Course.FilteredStudents.length > 0"}
           %thead
             %tr
               %th #
@@ -76,17 +76,17 @@
               %th Email
               %th ACTIONS
           %tbody
-            %tr{"ng-repeat" => "student in filtered_students = (all_students | filter: query | limitTo: 50)"}
+            %tr{"ng-repeat" => "student in Course.FilteredStudents = (Course.AllStudentss | filter: query | limitTo: 10)"}
               %td {{$index + 1}}
               %td
                 {{student.first_name}}
-                //%input{:style => "display: block; padding: 0; margin: 0; border: 0; width: 100%;"}
               %td
                 {{student.last_name}}
               %td
                 {{student.email}}
               %td
-                Invite
+                %button.btn.btn-success.btn-xs{"ng-click" => "addStudent(student, course, $index)"}
+                  Add
 
     %h3 Courses I am subscribed to
     %h6

@@ -1,10 +1,9 @@
-%h2 Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "login-form form-horizontal"}) do |f|
-  %fieldset
-    .form-group
+.container
+  %h2 Log in
+  = form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "login-form form-horizontal"}) do |f|
+    %fieldset
       = f.label :email, :class => "control-label"
       = f.email_field :email, :class => "form-control", autofocus: true
-    .form-group
       = f.label :password, :class => "control-label"
       = f.password_field :password, :class => "form-control", autocomplete: "off"
     /- if devise_mapping.rememberable?
@@ -14,4 +13,4 @@
     /
     .actions
       = f.submit "Log in", :class => "btn btn-default"
-= render "devise/shared/links"
+  = render "devise/shared/links"

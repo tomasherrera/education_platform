@@ -4,11 +4,14 @@ Rails.application.routes.draw do
   get 'profile' => "home#profile"
   get 'welcome' => "home#welcome"
   get 'all_students' => "home#get_students"
+  delete 'course_connections' => "course_connections#destroy"
 
   devise_for :users
   resources :courses do
     get "students" => "course_connections#index"
   end
+
+  resources :course_connections, only: [:create, :index]
   root 'home#welcome'
   get "index" => "home#index"
   # The priority is based upon order of creation: first created -> highest priority.
